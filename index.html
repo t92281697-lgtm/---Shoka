@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>書架 -shoka- 読書記録</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="texture"></div>
+ 
+<header class="hero">
+  <div class="eyebrow">Personal reading log</div>
+  <h1 class="title">書架<span class="roman">shoka</span></h1>
+  <p class="tagline">読んだ本、読んでいる本、読みたい本。シリーズや作者でまとめたり、好きな順に並べ替えたりしながら、棚に並べていく読書記録。</p>
+  <div class="stats-row" id="statsRow"></div>
+</header>
+ 
+<div class="shelf-wrap">
+  <div id="shelf"></div>
+</div>
+ 
+<div class="controls">
+  <div class="controls-line">
+    <div class="control-group" id="filters">
+      <span class="group-label">表示</span>
+      <button class="filter-btn active" data-filter="all">すべて</button>
+      <button class="filter-btn" data-filter="reading">読書中</button>
+      <button class="filter-btn" data-filter="completed">読了</button>
+      <button class="filter-btn" data-filter="want">積読</button>
+    </div>
+    <button class="add-btn" id="openAdd">＋ 本を追加</button>
+  </div>
+  <div class="controls-line">
+    <div class="control-group" id="sortModes">
+      <span class="group-label">並び替え</span>
+      <button class="filter-btn active" data-sort="manual">手動</button>
+      <button class="filter-btn" data-sort="group">シリーズ・著者順</button>
+      <button class="filter-btn" data-sort="added">追加順</button>
+      <button class="filter-btn" data-sort="rating">評価順</button>
+    </div>
+  </div>
+</div>
+ 
+<div class="list" id="list"></div>
+ 
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h2 id="modalTitle">本を追加</h2>
+    <div class="hint">シリーズ物は「シリーズ名」を同じ表記で入力すると、まとめて並べられます。空欄のままなら著者名で自動的にグループ化されます。</div>
+    <input type="hidden" id="editId">
+    <div class="field">
+      <label>タイトル</label>
+      <input type="text" id="fTitle" placeholder="例：ノルウェイの森">
+    </div>
+    <div class="field">
+      <label>著者</label>
+      <input type="text" id="fAuthor" placeholder="例：村上春樹">
+    </div>
+    <div class="row3">
+      <div class="field">
+        <label>シリーズ名（任意）</label>
+        <input type="text" id="fSeries" placeholder="例：三体シリーズ">
+      </div>
+      <div class="field">
+        <label>巻数</label>
+        <input type="number" id="fVolume" placeholder="1" min="0">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>ジャンル</label>
+        <select id="fGenre">
+          <option>小説</option>
+          <option>エッセイ</option>
+          <option>ノンフィクション</option>
+          <option>ビジネス</option>
+          <option>詩歌</option>
+          <option>技術書</option>
+          <option>その他</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>ステータス</label>
+        <select id="fStatus">
+          <option value="want">積読</option>
+          <option value="reading">読書中</option>
+          <option value="completed">読了</option>
+        </select>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>総ページ数</label>
+        <input type="number" id="fTotal" placeholder="320" min="1">
+      </div>
+      <div class="field">
+        <label>現在のページ</label>
+        <input type="number" id="fCurrent" placeholder="0" min="0">
+      </div>
+    </div>
+    <div class="field">
+      <label>評価</label>
+      <div class="star-picker" id="starPicker">★★★★★</div>
+    </div>
+    <div class="field">
+      <label>メモ</label>
+      <textarea id="fNotes" placeholder="感想やお気に入りの一節など"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="cancelBtn">キャンセル</button>
+      <button class="btn danger" id="deleteBtn" style="display:none;">削除</button>
+      <button class="btn primary" id="saveBtn">保存する</button>
+    </div>
+  </div>
+</div>
+ 
+<div class="toast" id="toast"></div>
+ 
+<script src="script.js"></script>
+</body>
+</html>
