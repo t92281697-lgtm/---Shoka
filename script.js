@@ -9,21 +9,7 @@ const BOOK_COLORS = {
   black: 'linear-gradient(180deg,#2D2D2D,#111111)'
 };
 
-<div class="field">
-<label>本の色</label>
 
-<select id="fColor">
-<option value="burgundy">ワインレッド</option>
-<option value="green">深緑</option>
-<option value="navy">ネイビー</option>
-<option value="brass">真鍮</option>
-<option value="purple">紫</option>
-<option value="blue">ブルー</option>
-<option value="brown">ブラウン</option>
-<option value="black">ブラック</option>
-</select>
-
-</div>
  
 let books = [];
 let currentFilter = 'all';
