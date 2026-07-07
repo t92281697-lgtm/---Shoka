@@ -1,12 +1,29 @@
-const GENRE_COLORS = {
-  '小説': 'linear-gradient(180deg,#6E2E2E,#4f2020)',
-  'エッセイ': 'linear-gradient(180deg,#A8813F,#7c5e2b)',
-  'ノンフィクション': 'linear-gradient(180deg,#2F4538,#1f2f26)',
-  'ビジネス': 'linear-gradient(180deg,#1C2B3A,#131f2b)',
-  '詩歌': 'linear-gradient(180deg,#7a5980,#563d5c)',
-  '技術書': 'linear-gradient(180deg,#3a5a63,#294049)',
-  'その他': 'linear-gradient(180deg,#5c5648,#403c32)',
+const BOOK_COLORS = {
+  burgundy: 'linear-gradient(180deg,#6E2E2E,#4f2020)',
+  green: 'linear-gradient(180deg,#2F4538,#1f2f26)',
+  navy: 'linear-gradient(180deg,#1C2B3A,#131f2b)',
+  brass: 'linear-gradient(180deg,#A8813F,#7c5e2b)',
+  purple: 'linear-gradient(180deg,#7a5980,#563d5c)',
+  blue: 'linear-gradient(180deg,#3a5a63,#294049)',
+  brown: 'linear-gradient(180deg,#5c5648,#403c32)',
+  black: 'linear-gradient(180deg,#2D2D2D,#111111)'
 };
+
+<div class="field">
+<label>本の色</label>
+
+<select id="fColor">
+<option value="burgundy">ワインレッド</option>
+<option value="green">深緑</option>
+<option value="navy">ネイビー</option>
+<option value="brass">真鍮</option>
+<option value="purple">紫</option>
+<option value="blue">ブルー</option>
+<option value="brown">ブラウン</option>
+<option value="black">ブラック</option>
+</select>
+
+</div>
  
 let books = [];
 let currentFilter = 'all';
@@ -149,7 +166,7 @@ function packRows(items, containerWidth){
 function spineHtml(b){
   const width = spineWidth(b);
   const height = spineHeight(b);
-  const bg = GENRE_COLORS[b.genre] || GENRE_COLORS['その他'];
+  const bg = BOOK_COLORS[b.color] || BOOK_COLORS.burgundy;
   const wantClass = b.status==='want' ? 'want' : '';
   const badge = b.status==='reading' ? '<div class="badge"></div>' : '';
   const draggable = sortMode==='manual' ? 'true' : 'false';
@@ -187,7 +204,7 @@ function renderShelf(){
 function cardHtml(b, showMove, isFirst, isLast){
   const pct = b.totalPages>0 ? Math.min(100, Math.round((Number(b.currentPage||0)/Number(b.totalPages))*100)) : 0;
   const stars = b.rating ? '★'.repeat(b.rating) + '☆'.repeat(5-b.rating) : '';
-  const bg = GENRE_COLORS[b.genre] || GENRE_COLORS['その他'];
+  const bg = BOOK_COLORS[b.color] || BOOK_COLORS.burgundy;
   const statusLabel = {reading:'読書中', completed:'読了', want:'積読'};
   const seriesInfo = b.series ? `${escapeHtml(b.series)}${b.volume ? ' 第'+escapeHtml(String(b.volume))+'巻' : ''} ・ ` : '';
   const moveBtns = showMove ? `<div class="move-btns">
@@ -315,6 +332,7 @@ function openAdd(){
   $('#fSeries').value = '';
   $('#fVolume').value = '';
   $('#fGenre').value = '小説';
+  $('#fColor').value = 'burgundy';
   $('#fStatus').value = 'want';
   $('#fTotal').value = '';
   $('#fCurrent').value = '';
@@ -336,6 +354,7 @@ function openEdit(id){
   $('#fSeries').value = b.series||'';
   $('#fVolume').value = b.volume||'';
   $('#fGenre').value = b.genre;
+  $('#fColor').value = b.color || "burgundy";
   $('#fStatus').value = b.status;
   $('#fTotal').value = b.totalPages||'';
   $('#fCurrent').value = b.currentPage||'';
@@ -363,6 +382,7 @@ async function handleSave(){
     series: $('#fSeries').value.trim(),
     volume: $('#fVolume').value ? Number($('#fVolume').value) : null,
     genre: $('#fGenre').value,
+    color: $('#fColor').value,
     status,
     totalPages: Number($('#fTotal').value)||0,
     currentPage: Number($('#fCurrent').value)||0,
