@@ -1,0 +1,5 @@
+User-agent: *
+
+Allow: /
+
+Sitemap: https://t92281697-lgtm.github.io/---Shoka/sitemap.xml
